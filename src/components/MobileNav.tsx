@@ -28,7 +28,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ items, activeTab, onTabChange }) 
               <div 
                 className={`
                   p-2 rounded-2xl transition-all duration-300 transform
-                  ${isActive ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 scale-110 -translate-y-2' : 'text-slate-400 hover:text-indigo-500 hover:bg-slate-50'}
+                  ${isActive ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/30 scale-110 -translate-y-2' : 'text-slate-400 hover:text-teal-500 hover:bg-slate-50'}
                 `}
               >
                 {item.icon}
@@ -41,7 +41,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ items, activeTab, onTabChange }) 
               <span 
                 className={`
                   text-[10px] font-bold tracking-wide transition-all duration-300
-                  ${isActive ? 'text-indigo-600 translate-y-0 opacity-100' : 'text-transparent opacity-0 absolute bottom-0 translate-y-4'}
+                  ${isActive ? 'text-teal-600 translate-y-0 opacity-100' : 'text-transparent opacity-0 absolute bottom-0 translate-y-4'}
                 `}
               >
                 {item.label}

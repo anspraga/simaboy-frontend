@@ -13,9 +13,9 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-indigo-600 text-white hover:bg-indigo-500 active:bg-indigo-700 shadow-lg shadow-indigo-500/30',
+  primary: 'bg-teal-600 text-white hover:bg-teal-500 active:bg-teal-700 shadow-lg shadow-teal-500/30',
   secondary: 'bg-slate-800 text-white hover:bg-slate-700 active:bg-slate-900 shadow-md',
-  outline: 'border-2 border-slate-200 text-slate-700 hover:border-indigo-500 hover:text-indigo-600 bg-transparent',
+  outline: 'border-2 border-slate-200 text-slate-700 hover:border-teal-500 hover:text-teal-600 bg-transparent',
   ghost: 'bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900',
   danger: 'bg-rose-500 text-white hover:bg-rose-600 active:bg-rose-700 shadow-lg shadow-rose-500/30',
 };
@@ -38,7 +38,7 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseClass = 'inline-flex items-center justify-center font-bold select-none touch-manipulation transition-all duration-200 active:scale-[0.98] outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:pointer-events-none';
+  const baseClass = 'inline-flex items-center justify-center font-bold select-none touch-manipulation transition-all duration-200 active:scale-[0.98] outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-50 disabled:pointer-events-none';
   const finalClass = `${baseClass} ${variantStyles[variant]} ${sizeStyles[size]} ${fullWidth ? 'w-full' : ''} ${className}`;
 
   return (

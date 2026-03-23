@@ -59,7 +59,7 @@ function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => vo
         appName="SIMABOY CBT"
         userName={data.student.name}
         userRole={`NIS: ${data.student.nis} | Kelas: ${data.student.class_name}`}
-        brandGradient="from-blue-600 to-indigo-600"
+        brandGradient="from-teal-600 to-emerald-600"
         items={navItems}
         activeTab={activeTab}
         onTabChange={handleNavChange}
@@ -79,7 +79,7 @@ function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => vo
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                  <Card variant="glass" className="col-span-1 md:col-span-2 relative overflow-hidden group !p-8 border-indigo-100 shadow-indigo-100/50 hover:shadow-2xl">
                    <div className="absolute -right-10 -top-10 w-40 h-40 bg-indigo-500 rounded-full mix-blend-multiply opacity-10 group-hover:scale-150 transition-transform duration-700"></div>
-                   <h3 className="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-3">Ujian Berlangsung / Akan Datang</h3>
+                    <h3 className="text-xs font-bold text-teal-600 uppercase tracking-widest mb-3">Ujian Berlangsung / Akan Datang</h3>
                    <h2 className="text-2xl font-extrabold text-slate-800 mb-6 tracking-tight">
                      {data.exams?.length > 0 ? data.exams[0].title : "Tidak ada jadwal ujian saat ini 🎉"}
                    </h2>

@@ -160,7 +160,7 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white gap-4">
-        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
         <p className="text-slate-400 font-medium">Memuat Data Ujian...</p>
       </div>
     );
@@ -172,7 +172,7 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white gap-6 p-6">
         <div className="text-6xl">📭</div>
         <h2 className="text-xl font-bold">Ujian tidak valid atau belum ada soal.</h2>
-        <button onClick={onEndExam} className="bg-blue-600 px-8 py-3 rounded-2xl text-white font-bold hover:bg-blue-500 transition-all active:scale-95">
+        <button onClick={onEndExam} className="bg-teal-600 px-8 py-3 rounded-2xl text-white font-bold hover:bg-teal-500 transition-all active:scale-95">
           Kembali ke Dashboard
         </button>
       </div>
@@ -194,7 +194,7 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
           </p>
           <button
             onClick={enterFullscreen}
-            className="w-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-bold text-lg py-4 px-8 rounded-2xl shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all flex items-center justify-center gap-3"
+            className="w-full bg-teal-600 hover:bg-teal-500 active:scale-95 text-white font-bold text-lg py-4 px-8 rounded-2xl shadow-[0_0_20px_rgba(13,148,136,0.4)] transition-all flex items-center justify-center gap-3"
           >
             Mulai Kerjakan
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
@@ -263,7 +263,7 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
                 <button
                   key={q.id}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`aspect-square rounded-lg text-xs font-bold flex items-center justify-center transition-all ${isActive ? 'bg-blue-600 text-white shadow-md scale-110' : isAnswered ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-400 hover:bg-slate-200 border border-slate-200'}`}
+                  className={`aspect-square rounded-lg text-xs font-bold flex items-center justify-center transition-all ${isActive ? 'bg-teal-600 text-white shadow-md scale-110' : isAnswered ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-400 hover:bg-slate-200 border border-slate-200'}`}
                 >
                   {idx + 1}
                 </button>
@@ -286,7 +286,7 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
               </div>
               {/* Legend */}
               <div className="flex gap-3 px-4 py-2 border-b border-slate-100 text-[11px] text-slate-500">
-                <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-blue-600 inline-block"></span>Aktif</span>
+                <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-teal-600 inline-block"></span>Aktif</span>
                 <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-emerald-100 border border-emerald-200 inline-block"></span>Dijawab</span>
                 <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-slate-100 border border-slate-200 inline-block"></span>Belum</span>
               </div>
@@ -298,7 +298,7 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
                     <button
                       key={q.id}
                       onClick={() => { setCurrentIndex(idx); setShowNav(false); }}
-                      className={`aspect-square rounded-lg text-xs font-bold flex items-center justify-center transition-all ${isActive ? 'bg-blue-600 text-white shadow-md' : isAnswered ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-400 border border-slate-200'}`}
+                      className={`aspect-square rounded-lg text-xs font-bold flex items-center justify-center transition-all ${isActive ? 'bg-teal-600 text-white shadow-md' : isAnswered ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-400 border border-slate-200'}`}
                     >
                       {idx + 1}
                     </button>
@@ -320,11 +320,11 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
               <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-8 mb-5">
                 {/* Badge row */}
                 <div className="flex items-center justify-between mb-5 pb-4 border-b border-slate-100">
-                  <span className={`font-bold px-3 py-1 rounded-lg border uppercase text-xs tracking-wider ${currentQ.type.toUpperCase() === 'PG' ? 'bg-blue-50 text-blue-700 border-blue-100' : 'bg-purple-50 text-purple-700 border-purple-100'}`}>
+                  <span className={`font-bold px-3 py-1 rounded-lg border uppercase text-xs tracking-wider ${currentQ.type.toUpperCase() === 'PG' ? 'bg-teal-50 text-teal-700 border-teal-100' : 'bg-purple-50 text-purple-700 border-purple-100'}`}>
                     {currentQ.type.toUpperCase() === 'PG' ? 'Pilihan Ganda' : 'Essay'}
                   </span>
                   <span className="text-slate-400 text-xs sm:text-sm font-medium">
-                    Soal {currentIndex + 1}/{questions.length} · <span className="text-blue-600 font-bold">{currentQ.points} poin</span>
+                    Soal {currentIndex + 1}/{questions.length} · <span className="text-teal-600 font-bold">{currentQ.points} poin</span>
                   </span>
                 </div>
 
@@ -341,10 +341,10 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
                       return (
                         <label
                           key={opt.id}
-                          className={`flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl border-2 cursor-pointer transition-all active:scale-[0.99] ${selected ? 'border-blue-600 bg-blue-50/70 shadow-sm' : 'border-slate-200 hover:border-blue-300 hover:bg-blue-50/20'}`}
+                          className={`flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl border-2 cursor-pointer transition-all active:scale-[0.99] ${selected ? 'border-teal-600 bg-teal-50/70 shadow-sm' : 'border-slate-200 hover:border-teal-300 hover:bg-teal-50/20'}`}
                         >
                           {/* Option letter circle */}
-                          <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0 font-black text-sm transition-all ${selected ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 text-slate-400'}`}>
+                          <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0 font-black text-sm transition-all ${selected ? 'border-teal-600 bg-teal-600 text-white' : 'border-slate-300 text-slate-400'}`}>
                             {opt.id.toUpperCase()}
                           </div>
                           <input
@@ -361,7 +361,7 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
                   </div>
                 ) : (
                   <textarea
-                    className="w-full p-4 border-2 border-slate-200 rounded-xl min-h-[160px] focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none text-slate-700 font-medium resize-y text-base"
+                    className="w-full p-4 border-2 border-slate-200 rounded-xl min-h-[160px] focus:ring-4 focus:ring-teal-500/10 focus:border-teal-500 outline-none text-slate-700 font-medium resize-y text-base"
                     placeholder="Ketik jawaban essay Anda di sini..."
                     value={answers[currentQ.id] || ''}
                     onChange={(e) => setAnswers(prev => ({ ...prev, [currentQ.id]: e.target.value }))}
@@ -410,7 +410,7 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
               ) : (
                 <button
                   onClick={() => setCurrentIndex(prev => Math.min(questions.length - 1, prev + 1))}
-                  className="flex items-center gap-2 px-4 sm:px-6 py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-500 transition-all shadow-md active:scale-95 text-sm sm:text-base"
+                  className="flex items-center gap-2 px-4 sm:px-6 py-3 rounded-xl bg-teal-600 text-white font-bold hover:bg-teal-500 transition-all shadow-md active:scale-95 text-sm sm:text-base"
                 >
                   <span className="hidden sm:inline">Selanjutnya</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>

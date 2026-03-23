@@ -28,7 +28,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   activeTab,
   onTabChange,
   onLogout,
-  brandGradient = 'from-indigo-600 to-purple-600',
+  brandGradient = 'from-teal-500 to-emerald-500',
 }) => {
   return (
     <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shadow-2xl z-20 hidden md:flex">
@@ -50,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={() => onTabChange(tab.id)}
               className={`
                 w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 relative overflow-hidden group
-                ${isActive ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'}
+                ${isActive ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'}
               `}
             >
               {isActive && <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] animate-[shimmer_2s_infinite]"></div>}
