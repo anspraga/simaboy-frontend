@@ -220,29 +220,27 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
 
   // ── Exam Room (Fullscreen) ──
   return (
-    <div className="flex flex-col h-screen bg-slate-100 font-sans select-none overflow-hidden">
+    <div className="flex flex-col h-screen bg-slate-50 font-sans select-none overflow-hidden">
 
-      {/* ── STICKY TOP HEADER ── */}
-      <header className="flex-none h-14 bg-white border-b border-slate-200 flex items-center justify-between px-3 sm:px-6 shadow-sm z-20">
-        {/* Left: Nav Toggle (mobile) + Title */}
-        <div className="flex items-center gap-2 min-w-0">
+      {/* ── STICKY TOP HEADER (Compact Mobile) ── */}
+      <header className="flex-none h-12 sm:h-14 bg-white/90 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-3 sm:px-6 shadow-sm z-20 sticky top-0">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <button
             onClick={() => setShowNav(v => !v)}
-            className="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 transition flex items-center justify-center shrink-0 md:hidden"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-slate-100 active:bg-slate-200 transition flex items-center justify-center shrink-0 md:hidden"
             aria-label="Navigasi soal"
           >
-            <svg className="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            <svg className="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
           </button>
           <div className="min-w-0">
-            <h2 className="font-bold text-slate-800 text-sm truncate leading-tight">{exam.title}</h2>
-            <p className="text-[11px] text-slate-400 hidden sm:block">{user} · {answeredCount}/{questions.length} soal dijawab</p>
+            <h2 className="font-bold text-slate-800 text-xs sm:text-sm truncate leading-tight">{exam.title}</h2>
+            <p className="text-[10px] sm:text-[11px] text-slate-400 truncate hidden sm:block">{user} · {answeredCount}/{questions.length} dijawab</p>
           </div>
         </div>
 
-        {/* Right: Timer */}
-        <div className={`flex items-center gap-1.5 px-3 sm:px-5 py-1.5 rounded-full font-mono font-bold text-sm sm:text-base transition-all ${timeLeft <= 300 ? 'bg-rose-600 text-white animate-pulse shadow-[0_0_15px_rgba(225,29,72,0.5)]' : 'bg-slate-900 text-white'}`}>
-          <svg className="w-4 h-4 opacity-70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          <span className="tracking-widest">{formatTime(timeLeft)}</span>
+        <div className={`flex items-center gap-1.5 px-3 py-1 sm:py-1.5 rounded-lg font-mono font-bold text-xs sm:text-base transition-all ${timeLeft <= 300 ? 'bg-rose-100 text-rose-700 animate-pulse border border-rose-200' : 'bg-slate-100 text-slate-800 border border-slate-200'}`}>
+          <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span className="tracking-wider">{formatTime(timeLeft)}</span>
         </div>
       </header>
 
@@ -263,7 +261,7 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
                 <button
                   key={q.id}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`aspect-square rounded-lg text-xs font-bold flex items-center justify-center transition-all ${isActive ? 'bg-teal-600 text-white shadow-md scale-110' : isAnswered ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-400 hover:bg-slate-200 border border-slate-200'}`}
+                  className={`aspect-square rounded-lg text-xs font-bold flex items-center justify-center transition-all ${isActive ? 'bg-teal-600 text-white shadow-md scale-110' : isAnswered ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 border border-slate-200'}`}
                 >
                   {idx + 1}
                 </button>
@@ -275,7 +273,7 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
         {/* ── MOBILE NAV DRAWER OVERLAY ── */}
         {showNav && (
           <div className="fixed inset-0 z-30 md:hidden" onClick={() => setShowNav(false)}>
-            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" />
             <div className="absolute left-0 top-0 bottom-0 w-64 bg-white shadow-2xl flex flex-col" onClick={e => e.stopPropagation()}>
               <div className="px-4 py-4 bg-slate-800 flex items-center justify-between">
                 <div>
@@ -284,11 +282,9 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
                 </div>
                 <button onClick={() => setShowNav(false)} className="w-8 h-8 rounded-xl bg-slate-700 flex items-center justify-center text-slate-300 hover:bg-slate-600">✕</button>
               </div>
-              {/* Legend */}
-              <div className="flex gap-3 px-4 py-2 border-b border-slate-100 text-[11px] text-slate-500">
-                <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-teal-600 inline-block"></span>Aktif</span>
-                <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-emerald-100 border border-emerald-200 inline-block"></span>Dijawab</span>
-                <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-slate-100 border border-slate-200 inline-block"></span>Belum</span>
+              <div className="flex gap-3 px-4 py-2 border-b border-slate-100 text-[11px] text-slate-500 font-medium">
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-teal-600"></span>Aktif</span>
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-emerald-200 border border-emerald-300"></span>Selesai</span>
               </div>
               <div className="flex-1 p-3 grid grid-cols-5 gap-1.5 overflow-y-auto content-start">
                 {questions.map((q, idx) => {
@@ -298,7 +294,7 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
                     <button
                       key={q.id}
                       onClick={() => { setCurrentIndex(idx); setShowNav(false); }}
-                      className={`aspect-square rounded-lg text-xs font-bold flex items-center justify-center transition-all ${isActive ? 'bg-teal-600 text-white shadow-md' : isAnswered ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-400 border border-slate-200'}`}
+                      className={`aspect-square rounded-lg text-xs font-bold flex items-center justify-center transition-all ${isActive ? 'bg-teal-600 text-white shadow-md' : isAnswered ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500 border border-slate-200'}`}
                     >
                       {idx + 1}
                     </button>
@@ -316,35 +312,32 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
           <div className="flex-1 overflow-y-auto px-3 sm:px-6 md:px-10 py-4 sm:py-6">
             <div className="max-w-3xl mx-auto">
 
-              {/* Question Card */}
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-8 mb-5">
-                {/* Badge row */}
-                <div className="flex items-center justify-between mb-5 pb-4 border-b border-slate-100">
-                  <span className={`font-bold px-3 py-1 rounded-lg border uppercase text-xs tracking-wider ${currentQ.type.toUpperCase() === 'PG' ? 'bg-teal-50 text-teal-700 border-teal-100' : 'bg-purple-50 text-purple-700 border-purple-100'}`}>
+              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-8 mb-5">
+                <div className="flex items-center justify-between mb-4 sm:mb-5 pb-3 sm:pb-4 border-b border-slate-100">
+                  <span className={`font-bold px-2.5 py-1 rounded-md border uppercase text-[10px] sm:text-xs tracking-wider ${currentQ.type.toUpperCase() === 'PG' ? 'bg-teal-50 text-teal-700 border-teal-100' : 'bg-purple-50 text-purple-700 border-purple-100'}`}>
                     {currentQ.type.toUpperCase() === 'PG' ? 'Pilihan Ganda' : 'Essay'}
                   </span>
-                  <span className="text-slate-400 text-xs sm:text-sm font-medium">
-                    Soal {currentIndex + 1}/{questions.length} · <span className="text-teal-600 font-bold">{currentQ.points} poin</span>
+                  <span className="text-slate-500 text-[11px] sm:text-sm font-medium">
+                    <span className="text-teal-600 font-bold">{currentQ.points} poin</span>
                   </span>
                 </div>
 
                 {/* Question text */}
-                <p className="text-base sm:text-xl font-medium text-slate-800 leading-relaxed mb-6 whitespace-pre-wrap selection:bg-transparent">
+                <p className="text-sm sm:text-lg font-semibold text-slate-800 leading-relaxed mb-5 sm:mb-6 whitespace-pre-wrap selection:bg-teal-100">
                   {currentQ.question_text}
                 </p>
 
                 {/* Options / Essay */}
                 {currentQ.type.toUpperCase() === 'PG' ? (
-                  <div className="space-y-3">
+                  <div className="space-y-2.5 sm:space-y-3">
                     {options.map((opt) => {
                       const selected = answers[currentQ.id] === opt.id;
                       return (
                         <label
                           key={opt.id}
-                          className={`flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl border-2 cursor-pointer transition-all active:scale-[0.99] ${selected ? 'border-teal-600 bg-teal-50/70 shadow-sm' : 'border-slate-200 hover:border-teal-300 hover:bg-teal-50/20'}`}
+                          className={`flex items-start gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-xl border cursor-pointer transition-all active:scale-[0.98] ${selected ? 'border-teal-500 bg-teal-50 shadow-sm ring-1 ring-teal-500' : 'border-slate-200 bg-white hover:border-teal-300'}`}
                         >
-                          {/* Option letter circle */}
-                          <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0 font-black text-sm transition-all ${selected ? 'border-teal-600 bg-teal-600 text-white' : 'border-slate-300 text-slate-400'}`}>
+                          <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center shrink-0 font-bold text-xs sm:text-sm transition-all mt-0.5 ${selected ? 'border-teal-600 bg-teal-600 text-white' : 'border-slate-300 text-slate-500'}`}>
                             {opt.id.toUpperCase()}
                           </div>
                           <input
@@ -354,14 +347,14 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
                             checked={selected}
                             onChange={() => setAnswers(prev => ({ ...prev, [currentQ.id]: opt.id }))}
                           />
-                          <span className="text-base text-slate-700 font-medium leading-snug pt-1">{opt.text}</span>
+                          <span className={`text-sm sm:text-base font-medium leading-snug pt-0.5 sm:pt-1 ${selected ? 'text-teal-900' : 'text-slate-700'}`}>{opt.text}</span>
                         </label>
                       );
                     })}
                   </div>
                 ) : (
                   <textarea
-                    className="w-full p-4 border-2 border-slate-200 rounded-xl min-h-[160px] focus:ring-4 focus:ring-teal-500/10 focus:border-teal-500 outline-none text-slate-700 font-medium resize-y text-base"
+                    className="w-full p-4 border border-slate-300 rounded-xl min-h-[120px] sm:min-h-[160px] focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none text-slate-700 font-medium resize-y text-sm sm:text-base bg-slate-50 focus:bg-white transition-colors"
                     placeholder="Ketik jawaban essay Anda di sini..."
                     value={answers[currentQ.id] || ''}
                     onChange={(e) => setAnswers(prev => ({ ...prev, [currentQ.id]: e.target.value }))}
@@ -372,28 +365,23 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
             </div>
           </div>
 
-          {/* ── STICKY BOTTOM NAVIGATION ── */}
-          <div className="flex-none bg-white border-t border-slate-200 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.08)] px-3 sm:px-6 md:px-10 py-3 z-10">
-            <div className="max-w-3xl mx-auto flex items-center justify-between gap-3">
+          {/* ── STICKY BOTTOM NAVIGATION (Compact Mobile) ── */}
+          <div className="flex-none bg-white border-t border-slate-200 px-3 sm:px-6 md:px-10 py-2.5 sm:py-4 z-10 pb-safe shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)]">
+            <div className="max-w-3xl mx-auto flex items-center justify-between gap-2 sm:gap-3">
 
               <button
                 onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
                 disabled={currentIndex === 0}
-                className="flex items-center gap-2 px-4 sm:px-6 py-3 rounded-xl border border-slate-200 text-slate-500 font-bold bg-white hover:bg-slate-50 transition-colors shadow-sm disabled:opacity-40 disabled:cursor-not-allowed text-sm sm:text-base"
+                className="flex items-center justify-center gap-2 w-12 sm:w-auto px-0 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-slate-200 text-slate-600 font-semibold bg-slate-50 active:bg-slate-100 disabled:opacity-40 text-sm"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" /></svg>
                 <span className="hidden sm:inline">Sebelumnya</span>
               </button>
 
-              {/* Progress dots (mobile) / Page info (desktop) */}
-              <div className="flex-1 flex items-center justify-center">
-                <div className="hidden sm:block text-center">
-                  <p className="text-xs text-slate-400 font-medium">{answeredCount} dari {questions.length} soal dijawab</p>
-                  <div className="w-32 h-1.5 bg-slate-100 rounded-full mt-1 mx-auto overflow-hidden">
-                    <div className="h-full bg-emerald-500 rounded-full transition-all duration-300" style={{ width: `${(answeredCount / questions.length) * 100}%` }} />
-                  </div>
+              <div className="flex-1 flex flex-col items-center justify-center">
+                <div className="text-xs font-bold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-full">
+                  Soal {currentIndex + 1} / {questions.length}
                 </div>
-                <div className="sm:hidden text-sm font-bold text-slate-500">{currentIndex + 1} / {questions.length}</div>
               </div>
 
               {currentIndex === questions.length - 1 ? (
@@ -402,18 +390,18 @@ function ExamView({ examId, onEndExam }: ExamViewProps) {
                     if (window.confirm("Yakin ingin menyelesaikan ujian dan mengirimkan jawaban?")) handleSubmit();
                   }}
                   disabled={submitting}
-                  className="flex items-center gap-2 px-4 sm:px-6 py-3 rounded-xl bg-emerald-600 text-white font-bold hover:bg-emerald-500 transition-all shadow-md active:scale-95 disabled:opacity-50 text-sm sm:text-base"
+                  className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-teal-600 text-white font-bold active:bg-teal-700 disabled:opacity-50 text-sm w-auto shadow-sm shadow-teal-600/20"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
-                  {submitting ? 'Mengirim...' : 'Kumpulkan'}
+                  <svg className="w-4 h-4 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                  <span>{submitting ? '...' : 'Selesai'}</span>
                 </button>
               ) : (
                 <button
                   onClick={() => setCurrentIndex(prev => Math.min(questions.length - 1, prev + 1))}
-                  className="flex items-center gap-2 px-4 sm:px-6 py-3 rounded-xl bg-teal-600 text-white font-bold hover:bg-teal-500 transition-all shadow-md active:scale-95 text-sm sm:text-base"
+                  className="flex items-center justify-center gap-2 w-12 sm:w-auto px-0 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-teal-600 text-white font-semibold active:bg-teal-700 text-sm shadow-sm shadow-teal-600/20"
                 >
                   <span className="hidden sm:inline">Selanjutnya</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" /></svg>
                 </button>
               )}
             </div>
