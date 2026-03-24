@@ -268,9 +268,9 @@ function AdminDashboard() {
 
   // --- CHART COMPUTATIONS ---
   const summaryStats = [
-    { name: 'Siswa', value: summaryData.students_count, fill: '#0ea5e9' },
-    { name: 'Guru', value: summaryData.teachers_count, fill: '#8b5cf6' },
-    { name: 'Admin', value: summaryData.admins_count, fill: '#f43f5e' }
+    { name: 'Siswa', value: summaryData.students_count, fill: '#14b8a6' }, // Teal 500
+    { name: 'Guru', value: summaryData.teachers_count, fill: '#10b981' }, // Emerald 500
+    { name: 'Admin', value: summaryData.admins_count, fill: '#06b6d4' }   // Cyan 500
   ];
 
   const classChartData = summaryData.class_dist
@@ -499,8 +499,8 @@ function AdminDashboard() {
               {/* METRIC CARDS */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div className="bg-white rounded-3xl p-6 shadow-[0_2px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-100/50 hover:shadow-lg transition-all hover:-translate-y-1">
-                    <div className="w-12 h-12 rounded-2xl bg-sky-100 flex items-center justify-center mb-4">
-                      <svg className="w-6 h-6 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <div className="w-12 h-12 rounded-2xl bg-teal-100 flex items-center justify-center mb-4">
+                      <svg className="w-6 h-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">Total Siswa</p>
@@ -509,8 +509,8 @@ function AdminDashboard() {
                   </div>
 
                   <div className="bg-white rounded-3xl p-6 shadow-[0_2px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-100/50 hover:shadow-lg transition-all hover:-translate-y-1">
-                    <div className="w-12 h-12 rounded-2xl bg-violet-100 flex items-center justify-center mb-4">
-                      <svg className="w-6 h-6 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center mb-4">
+                      <svg className="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">Total Guru</p>
@@ -543,7 +543,7 @@ function AdminDashboard() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* DONUT CHART (Composition) */}
                 <Card className="lg:col-span-1 p-6 flex flex-col items-center hover:shadow-lg transition-shadow">
-                   <h3 className="text-sm font-bold text-slate-700 w-full border-b border-slate-100 pb-3 mb-4 flex items-center gap-2"><svg className="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg> Komposisi Pengguna</h3>
+                   <h3 className="text-sm font-bold text-slate-700 w-full border-b border-slate-100 pb-3 mb-4 flex items-center gap-2"><svg className="w-5 h-5 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg> Komposisi Pengguna</h3>
                    <div className="w-full h-64">
                      {loading ? (
                        <div className="w-full h-full flex items-center justify-center">
@@ -567,7 +567,7 @@ function AdminDashboard() {
 
                 {/* BAR CHART (Class Distribution) */}
                 <Card className="lg:col-span-2 p-6 flex flex-col hover:shadow-lg transition-shadow">
-                   <h3 className="text-sm font-bold text-slate-700 w-full border-b border-slate-100 pb-3 mb-4 flex items-center gap-2"><svg className="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg> Populasi Siswa per Kelas</h3>
+                   <h3 className="text-sm font-bold text-slate-700 w-full border-b border-slate-100 pb-3 mb-4 flex items-center gap-2"><svg className="w-5 h-5 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg> Populasi Siswa per Kelas</h3>
                    <div className="w-full h-64">
                      {loading ? (
                        <div className="w-full h-full flex items-end justify-between px-4 pb-2 pb-8 gap-2">
@@ -581,10 +581,10 @@ function AdminDashboard() {
                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} dy={10} />
                            <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
-                           <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} itemStyle={{ color: '#6366f1', fontWeight: 'bold' }} />
-                           <Bar dataKey="students" name="Siswa" fill="#8b5cf6" radius={[6, 6, 0, 0]} maxBarSize={40} animationDuration={1000}>
+                           <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} itemStyle={{ color: '#0d9488', fontWeight: 'bold' }} />
+                           <Bar dataKey="students" name="Siswa" fill="#14b8a6" radius={[6, 6, 0, 0]} maxBarSize={40} animationDuration={1000}>
                              {classChartData.map((_, index) => (
-                               <Cell key={`cell-${index}`} fill={index % 2 === 0 ? '#6366f1' : '#3b82f6'} />
+                               <Cell key={`cell-${index}`} fill={index % 2 === 0 ? '#14b8a6' : '#10b981'} />
                              ))}
                            </Bar>
                          </BarChart>
