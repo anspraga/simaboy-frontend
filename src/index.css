@@ -150,3 +150,17 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 }
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+body {
+  overscroll-behavior-y: none;
+}

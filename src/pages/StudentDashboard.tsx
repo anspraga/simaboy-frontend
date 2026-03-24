@@ -7,6 +7,7 @@ import { TopNav } from "../components/organisms/TopNav";
 import { Card } from "../components/molecules/Card";
 import { Button } from "../components/atoms/Button";
 import { Badge } from "../components/atoms/Badge";
+import { PullToRefresh } from "../components/atoms/PullToRefresh";
 
 function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => void }) {
   const [data, setData] = useState<any>(null);
@@ -27,6 +28,18 @@ function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => vo
     } else {
       setActiveTab(id);
     }
+  };
+  const handleRefresh = async () => {
+    try {
+      const res = await apiRequest(`/api/student/dashboard?username=${user}`);
+      if (res.ok) {
+        setData(await res.json());
+      }
+    } catch (err) {
+      console.error("Gagal refresh", err);
+    }
+    // Sengaja di-delay sedikit agar animasi spinner terlihat enak
+    await new Promise(resolve => setTimeout(resolve, 500));
   };
 
   useEffect(() => {
@@ -54,8 +67,8 @@ function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => vo
   return (
     <div className="flex h-screen bg-slate-50 font-sans overflow-hidden pb-16 md:pb-0">
       <MobileNav items={navItems} activeTab={activeTab} onTabChange={handleNavChange} />
-      
-      <Sidebar 
+
+      <Sidebar
         appName="SIMABOY CBT"
         userName={data.student.name}
         userRole={`NIS: ${data.student.nis} | Kelas: ${data.student.class_name}`}
@@ -67,74 +80,75 @@ function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => vo
       />
 
       <main className="flex-1 flex flex-col h-screen overflow-y-auto pb-28 md:pb-0 scroll-smooth">
-        <TopNav 
+        <TopNav
           title={`Halo, ${data.student.name.split(' ')[0]} 👋`}
           subtitle="Selamat datang di Portal Siswa Terpadu"
         />
 
         <div className="p-4 md:p-10 max-w-7xl mx-auto w-full space-y-6 md:space-y-8 animate-fade-in-up">
-          
-          {activeTab === 'home' && (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                 <Card variant="glass" className="col-span-1 md:col-span-2 relative overflow-hidden group !p-8 border-indigo-100 shadow-indigo-100/50 hover:shadow-2xl">
-                   <div className="absolute -right-10 -top-10 w-40 h-40 bg-indigo-500 rounded-full mix-blend-multiply opacity-10 group-hover:scale-150 transition-transform duration-700"></div>
-                    <h3 className="text-xs font-bold text-teal-600 uppercase tracking-widest mb-3">Ujian Berlangsung / Akan Datang</h3>
-                   <h2 className="text-2xl font-extrabold text-slate-800 mb-6 tracking-tight">
-                     {data.exams?.length > 0 ? data.exams[0].title : "Tidak ada jadwal ujian saat ini 🎉"}
-                   </h2>
-                   {data.exams?.length > 0 && (
-                     <>
-                       <div className="flex gap-4 mb-8">
-                         <Badge variant="warning">Waktu: {data.exams[0].duration_minutes || 90} Menit</Badge>
-                         <Badge variant="neutral">Mode Anti-Cheat Aktif</Badge>
-                       </div>
-                       <Button variant="primary" size="lg" onClick={() => onStartExam(data.exams[0].id)} className="group-hover:-translate-y-1">
-                         Masuk Ruang Ujian (CBT)
-                       </Button>
-                     </>
-                   )}
-                 </Card>
+          <PullToRefresh onRefresh={handleRefresh}>
 
-                 <Card variant="glass-dark" className="p-8 flex flex-col justify-between overflow-hidden relative">
+            {activeTab === 'home' && (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <Card variant="glass" className="col-span-1 md:col-span-2 relative overflow-hidden group !p-8 border-indigo-100 shadow-indigo-100/50 hover:shadow-2xl">
+                    <div className="absolute -right-10 -top-10 w-40 h-40 bg-indigo-500 rounded-full mix-blend-multiply opacity-10 group-hover:scale-150 transition-transform duration-700"></div>
+                    <h3 className="text-xs font-bold text-teal-600 uppercase tracking-widest mb-3">Ujian Berlangsung / Akan Datang</h3>
+                    <h2 className="text-2xl font-extrabold text-slate-800 mb-6 tracking-tight">
+                      {data.exams?.length > 0 ? data.exams[0].title : "Tidak ada jadwal ujian saat ini 🎉"}
+                    </h2>
+                    {data.exams?.length > 0 && (
+                      <>
+                        <div className="flex gap-4 mb-8">
+                          <Badge variant="warning">Waktu: {data.exams[0].duration_minutes || 90} Menit</Badge>
+                          <Badge variant="neutral">Mode Anti-Cheat Aktif</Badge>
+                        </div>
+                        <Button variant="primary" size="lg" onClick={() => onStartExam(data.exams[0].id)} className="group-hover:-translate-y-1">
+                          Masuk Ruang Ujian (CBT)
+                        </Button>
+                      </>
+                    )}
+                  </Card>
+
+                  <Card variant="glass-dark" className="p-8 flex flex-col justify-between overflow-hidden relative">
                     <div className="absolute -left-10 -bottom-10 w-32 h-32 bg-emerald-500 rounded-full mix-blend-screen opacity-20 filter blur-xl"></div>
                     <div className="relative z-10">
-                       <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Pencapaian Rata-Rata</h3>
-                       <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-400 tracking-tighter">
-                         {Number(data.score || 0).toFixed(1)}
-                       </div>
-                       <p className="text-emerald-400 text-xs mt-3 font-bold flex items-center gap-1">
-                         <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                         Ayo tingkatkan prestasimu!
-                       </p>
+                      <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Pencapaian Rata-Rata</h3>
+                      <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-400 tracking-tighter">
+                        {Number(data.score || 0).toFixed(1)}
+                      </div>
+                      <p className="text-emerald-400 text-xs mt-3 font-bold flex items-center gap-1">
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+                        Ayo tingkatkan prestasimu!
+                      </p>
                     </div>
-                 </Card>
-              </div>
+                  </Card>
+                </div>
 
-              <Card className="!p-8">
-                 <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
-                   <h3 className="text-lg font-bold text-slate-800 flex items-center gap-3">
-                     <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-xl shadow-inner">📅</div> 
-                     Riwayat Kehadiran Terakhir
-                   </h3>
-                   <Button variant="outline" size="sm">Lihat Semua</Button>
-                 </div>
+                <Card className="!p-8">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                    <h3 className="text-lg font-bold text-slate-800 flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-xl shadow-inner">📅</div>
+                      Riwayat Kehadiran Terakhir
+                    </h3>
+                    <Button variant="outline" size="sm">Lihat Semua</Button>
+                  </div>
 
-                 <div className="space-y-4">
+                  <div className="space-y-4">
                     {data.attendance?.length > 0 ? data.attendance.map((att: any, i: number) => {
                       const isGood = att.status === 'Hadir' || att.status === 'Izin' || att.status === 'Sakit';
                       return (
                         <div key={i} className="flex items-center justify-between p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white transition-colors hover:shadow-md">
-                           <div>
-                             <div className="font-bold text-slate-700">{att.subject}</div>
-                             <div className="text-xs font-medium text-slate-400 mt-1 flex items-center gap-2">
-                               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                               {new Date(att.date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'short' })}
-                             </div>
-                           </div>
-                           <div>
-                              <Badge variant={isGood ? 'success' : 'error'}>{att.status}</Badge>
-                           </div>
+                          <div>
+                            <div className="font-bold text-slate-700">{att.subject}</div>
+                            <div className="text-xs font-medium text-slate-400 mt-1 flex items-center gap-2">
+                              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                              {new Date(att.date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'short' })}
+                            </div>
+                          </div>
+                          <div>
+                            <Badge variant={isGood ? 'success' : 'error'}>{att.status}</Badge>
+                          </div>
                         </div>
                       );
                     }) : (
@@ -142,9 +156,9 @@ function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => vo
                         <p className="text-sm font-bold text-slate-500">Jurnal kehadiran masih kosong.</p>
                       </div>
                     )}
-                 </div>
+                  </div>
 
-                 {data.attendance?.some((a: any) => a.status === 'Alpha' || a.status === 'Bolos') && (
+                  {data.attendance?.some((a: any) => a.status === 'Alpha' || a.status === 'Bolos') && (
                     <div className="mt-8 bg-rose-50 border border-rose-200 p-5 rounded-2xl flex items-start gap-4 shadow-sm">
                       <div className="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center flex-shrink-0">⚠️</div>
                       <div>
@@ -152,12 +166,12 @@ function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => vo
                         <p className="text-xs text-rose-600 mt-1 font-medium leading-relaxed">Terdapat ketidakhadiran tanpa keterangan ("Alpha / Bolos"). Sistem otomatis telah mengirimkan peringatan ke nomor WhatsApp wali murid Anda.</p>
                       </div>
                     </div>
-                 )}
-              </Card>
-            </>
-          )}
+                  )}
+                </Card>
+              </>
+            )}
 
-          {activeTab === 'exam' && (
+            {activeTab === 'exam' && (
               <div className="space-y-6 animate-fade-in-up">
                 <div className="flex items-center justify-between mb-8">
                   <div>
@@ -169,28 +183,28 @@ function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => vo
                 {data.exams?.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {data.exams.map((exam: any) => {
-                       const isDone = data.history?.some((h: any) => h.exam_id === exam.id);
-                       return (
-                         <Card key={exam.id} className="relative overflow-hidden group hover:shadow-xl transition-all border-slate-200">
-                           <div className="p-6">
-                             <div className="flex items-center justify-between mb-4">
-                               <Badge variant={isDone ? "success" : "info"}>{isDone ? "Selesai" : "Tersedia"}</Badge>
-                               <span className="text-xs font-bold text-slate-400 font-mono">⏱ {exam.duration_minutes || 90} mnt</span>
-                             </div>
-                             <h3 className="font-bold text-lg text-slate-800 mb-2 leading-tight">{exam.title}</h3>
-                             <p className="text-sm text-slate-500 mb-6 line-clamp-2">{exam.description || "Ujian ini sedang berlangsung. Silakan kerjakan dengan jujur."}</p>
-                             
-                             <Button 
-                               variant={isDone ? "outline" : "primary"} 
-                               className="w-full"
-                               disabled={isDone}
-                               onClick={() => { if (!isDone) onStartExam(exam.id) }}
-                             >
-                               {isDone ? "Telah Diselesaikan 🏆" : "Mulai Kerjakan 🚀"}
-                             </Button>
-                           </div>
-                         </Card>
-                       );
+                      const isDone = data.history?.some((h: any) => h.exam_id === exam.id);
+                      return (
+                        <Card key={exam.id} className="relative overflow-hidden group hover:shadow-xl transition-all border-slate-200">
+                          <div className="p-6">
+                            <div className="flex items-center justify-between mb-4">
+                              <Badge variant={isDone ? "success" : "info"}>{isDone ? "Selesai" : "Tersedia"}</Badge>
+                              <span className="text-xs font-bold text-slate-400 font-mono">⏱ {exam.duration_minutes || 90} mnt</span>
+                            </div>
+                            <h3 className="font-bold text-lg text-slate-800 mb-2 leading-tight">{exam.title}</h3>
+                            <p className="text-sm text-slate-500 mb-6 line-clamp-2">{exam.description || "Ujian ini sedang berlangsung. Silakan kerjakan dengan jujur."}</p>
+
+                            <Button
+                              variant={isDone ? "outline" : "primary"}
+                              className="w-full"
+                              disabled={isDone}
+                              onClick={() => { if (!isDone) onStartExam(exam.id) }}
+                            >
+                              {isDone ? "Telah Diselesaikan 🏆" : "Mulai Kerjakan 🚀"}
+                            </Button>
+                          </div>
+                        </Card>
+                      );
                     })}
                   </div>
                 ) : (
@@ -201,9 +215,9 @@ function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => vo
                   </div>
                 )}
               </div>
-          )}
+            )}
 
-          {activeTab === 'profile' && (
+            {activeTab === 'profile' && (
               <div className="space-y-6 animate-fade-in-up">
                 <h2 className="text-2xl font-black text-slate-800 tracking-tight mb-6">Riwayat Nilai Ujian</h2>
                 {data.history?.length > 0 ? (
@@ -223,9 +237,9 @@ function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => vo
                               <td className="p-5 text-slate-600 font-mono">{new Date(h.created_at).toLocaleString('id-ID')}</td>
                               <td className="p-5 font-bold text-slate-800">Exam #{h.exam_id}</td>
                               <td className="p-5 text-right">
-                                 <span className={`inline-block px-3 py-1 rounded-lg font-black ${h.score >= 75 ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
-                                   {h.score.toFixed(1)}
-                                 </span>
+                                <span className={`inline-block px-3 py-1 rounded-lg font-black ${h.score >= 75 ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
+                                  {h.score.toFixed(1)}
+                                </span>
                               </td>
                             </tr>
                           ))}
@@ -235,12 +249,12 @@ function StudentDashboard({ onStartExam }: { onStartExam: (examId: number) => vo
                   </Card>
                 ) : (
                   <div className="p-8 text-center bg-white rounded-2xl border border-dashed border-slate-300">
-                     <p className="text-slate-500 font-medium">Belum ada riwayat ujian yang diselesaikan.</p>
+                    <p className="text-slate-500 font-medium">Belum ada riwayat ujian yang diselesaikan.</p>
                   </div>
                 )}
               </div>
-          )}
-
+            )}
+          </PullToRefresh>
         </div>
       </main>
     </div>

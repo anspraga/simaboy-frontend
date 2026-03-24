@@ -14,11 +14,11 @@ export default defineConfig({
         description: 'Portal Akademik & Ujian SMA 1 Boyolangu',
         theme_color: '#0f172a',
         background_color: '#0f172a',
-        display: 'standalone', // Ini yang membuat aplikasi tampil tanpa UI Browser!
+        display: 'fullscreen', // Ini memaksa HP masuk mode layar penuh
         orientation: 'portrait',
         icons: [
           {
-            src: '/favicon.svg', // Pastikan kamu punya icon resolusi tinggi (192x192 dan 512x512 berformat PNG) untuk production
+            src: '/favicon.svg',
             sizes: '192x192',
             type: 'image/svg+xml'
           }
